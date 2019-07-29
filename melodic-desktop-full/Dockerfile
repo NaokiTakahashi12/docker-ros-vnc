@@ -1,4 +1,4 @@
-FROM melodic-desktop/ros-vnc
+FROM ros-vnc:melodic-desktop
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i 's#http://tw.archive.ubuntu.com/#http://archive.ubuntu.com/#' /etc/apt/sources.list && \
 	apt update && \

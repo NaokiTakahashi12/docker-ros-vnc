@@ -13,7 +13,7 @@ RUN sed -i 's#http://tw.archive.ubuntu.com/#http://archive.ubuntu.com/#' /etc/ap
 	wget http://packages.ros.org/ros.key -O - | apt-key add - && \
 	apt update && \
 	apt install -y \
-		ros-melodic-base \
+		ros-melodic-ros-base \
 		&& \
 	bash -c '. /opt/ros/melodic/setup.bash; rosdep init; rosdep update' && \
 	echo 'source /opt/ros/melodic/setup.bash' >> ~/.bashrc && \

@@ -1,4 +1,4 @@
-FROM kinetic-base/ros-vnc
+FROM ros-vnc:kinetic-base
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
 	apt upgrade -y && \

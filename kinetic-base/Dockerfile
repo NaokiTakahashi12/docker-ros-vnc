@@ -11,7 +11,7 @@ RUN apt update && \
 	wget http://packages.ros.org/ros.key -O - | apt-key add - && \
 	apt update && \
 	apt install -y \
-		ros-kinetic-base \
+		ros-kinetic-ros-base \
 		&& \
 	bash -c '. /opt/ros/kinetic/setup.bash; rosdep init; rosdep update' && \
 	echo 'source /opt/ros/kinetic/setup.bash' >> ~/.bashrc && \
