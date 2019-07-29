@@ -1,25 +1,28 @@
-DOCKERFILENAME := Dockerfile
-PROJECT     := ros-vnc
-REVISION    := $(shell git rev-parse --short HEAD)
-TAG         := $(REVISION)
-DOCKERFILES := $(wildcard */$(DOCKERFILENAME))
+DOCKERFILENAME	:= Dockerfile
+PROJECT     	:= ros-vnc
+ORIGIN     		:= $(shell git remote get-url origin | sed -e 's/^.*@//g')
+REVISION    	:= $(shell git rev-parse --short HEAD)
+DOCKERFILES 	:= $(sort $(wildcard */$(DOCKERFILENAME)))
 
 .PHONY: build
 build:
-    @for DOCKERFILE in $(DOCKERFILES); do \
-        echo "$$(echo $$DOCKERFILE | sed 's/$(DOCKERFILENAME)/$(PROJECT)/') <<< $$DOCKERFILE"; \
+	@for DOCKERFILE in $(DOCKERFILES); do \
+        echo "start $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%') <<< $$DOCKERFILE"; \
+		sleep 1; \
         docker build \
-            --tag $$(echo $$DOCKERFILE | sed 's/$(DOCKERFILENAME)/$(PROJECT)/'):$(TAG) \
+			--build-arg GIT_REVISION=$(REVISION) \
+			--build-arg GIT_ORIGIN=$(REVISION) \
+            --tag $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%') \
             --file $$DOCKERFILE \
-            . >> /dev/null; \
+            . >> /dev/null && \
+		echo "finished $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%') <<< $$DOCKERFILE"; \
     done
-	@echo "finish"
 
 .PHONY: clean
 clean:
-    @for DOCKERFILE in $(DOCKERFILES); do \
-        echo "remove $$(echo $$DOCKERFILE | sed 's/$(DOCKERFILENAME)/$(PROJECT)/'):$(TAG)"; \
+	@for DOCKERFILE in $(DOCKERFILES); do \
+        echo "remove $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%')"; \
         docker image rm \
-            $$(echo $$DOCKERFILE | sed 's/$(DOCKERFILENAME)/$(PROJECT)/'):$(TAG); \
+            $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%'); \
     done
 	@echo "finish"
