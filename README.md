@@ -3,6 +3,12 @@ VNC container for ROS(kinetic/melodic).
 
 This container image based on [dorowu/ubuntu-desktop-lxde-vnc](https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc).
 
+## Support
++ kinetic
++ melodic
++ crystal
++ dashing
+
 ## How to build
 ```
 make
