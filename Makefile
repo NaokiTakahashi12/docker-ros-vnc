@@ -1,8 +1,8 @@
-DOCKERFILENAME	:= Dockerfile
+DOCKERFILE	:= Dockerfile
 PROJECT     	:= ros-vnc
 ORIGIN     		:= $(shell git remote get-url origin | sed -e 's/^.*@//g')
 REVISION    	:= $(shell git rev-parse --short HEAD)
-DOCKERFILES 	:= $(sort $(wildcard */$(DOCKERFILENAME)))
+DOCKERFILES 	:= $(sort $(wildcard */$(DOCKERFILE)))
 
 KINETICBASE			:= kinetic-base
 KINETICDESKTOP		:= kinetic-desktop
@@ -14,7 +14,7 @@ MELODICDESKTOPFULL	:= melodic-desktop-full
 .PHONY: build
 build: kineticdesktopfull melodicdesktopfull
 
-kineticbase: $(KINETICBASE)/$(DOCKERFILENAME)
+kineticbase: $(KINETICBASE)/$(DOCKERFILE)
 	@echo "build start $(PROJECT):$(KINETICBASE) <<< $<"
 	@docker build \
 		--file $< \
@@ -24,7 +24,7 @@ kineticbase: $(KINETICBASE)/$(DOCKERFILENAME)
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(KINETICBASE) <<< $<"
 
-kineticdesktop: $(KINETICDESKTOP)/$(DOCKERFILENAME) kineticbase
+kineticdesktop: $(KINETICDESKTOP)/$(DOCKERFILE) kineticbase
 	@echo "build start $(PROJECT):$(KINETICDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
@@ -34,7 +34,7 @@ kineticdesktop: $(KINETICDESKTOP)/$(DOCKERFILENAME) kineticbase
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(KINETICDESKTOP) <<< $<"
 
-kineticdesktopfull: $(KINETICDESKTOPFULL)/$(DOCKERFILENAME) kineticdesktop
+kineticdesktopfull: $(KINETICDESKTOPFULL)/$(DOCKERFILE) kineticdesktop
 	@echo "build start $(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
 	@docker build \
 		--file $< \
@@ -44,7 +44,7 @@ kineticdesktopfull: $(KINETICDESKTOPFULL)/$(DOCKERFILENAME) kineticdesktop
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
 
-melodicbase: $(MELODICBASE)/$(DOCKERFILENAME)
+melodicbase: $(MELODICBASE)/$(DOCKERFILE)
 	@echo "build start $(PROJECT):$(MELODICBASE) <<< $<"
 	@docker build \
 		--file $< \
@@ -54,7 +54,7 @@ melodicbase: $(MELODICBASE)/$(DOCKERFILENAME)
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(MELODICBASE) <<< $<"
 
-melodicdesktop: $(MELODICDESKTOP)/$(DOCKERFILENAME) melodicbase
+melodicdesktop: $(MELODICDESKTOP)/$(DOCKERFILE) melodicbase
 	@echo "build start $(PROJECT):$(MELODICDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
@@ -64,7 +64,7 @@ melodicdesktop: $(MELODICDESKTOP)/$(DOCKERFILENAME) melodicbase
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(MELODICDESKTOP) <<< $<"
 
-melodicdesktopfull: $(MELODICDESKTOPFULL)/$(DOCKERFILENAME) melodicdesktop
+melodicdesktopfull: $(MELODICDESKTOPFULL)/$(DOCKERFILE) melodicdesktop
 	@echo "build start $(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
 	@docker build \
 		--file $< \
@@ -75,10 +75,10 @@ melodicdesktopfull: $(MELODICDESKTOPFULL)/$(DOCKERFILENAME) melodicdesktop
 	echo "build finished $(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
 
 .PHONY: clean
-clean:
-	@for DOCKERFILE in $(DOCKERFILES); do \
-        echo "remove $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%')"; \
-        docker image rm \
-            $(PROJECT):$$(echo $$DOCKERFILE | sed 's%/$(DOCKERFILENAME)%%'); \
-    done
-	@echo "finish"
+clean: $(KINETICBASE) $(KINETICDESKTOP) $(KINETICDESKTOPFULL) $(MELODICBASE) $(MELODICDESKTOP) $(MELODICDESKTOPFULL)
+	@for IMAGETAG in $^; do \
+		echo "remove $(PROJECT):$$IMAGETAG"; \
+		docker image rm $(PROJECT):$$IMAGETAG; \
+	done
+	@echo "finished"
+
