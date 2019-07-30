@@ -10,9 +10,11 @@ KINETICDESKTOPFULL	:= kinetic-desktop-full
 MELODICBASE			:= melodic-base
 MELODICDESKTOP		:= melodic-desktop
 MELODICDESKTOPFULL	:= melodic-desktop-full
+CRYSTALBASE			:= crystal-base
+CRYSTALDESKTOP		:= crystal-desktop
 
 .PHONY: build
-build: kineticdesktopfull melodicdesktopfull
+build: kineticdesktopfull melodicdesktopfull crystaldesktop
 
 kineticbase: $(KINETICBASE)/$(DOCKERFILE)
 	@echo "build start $(PROJECT):$(KINETICBASE) <<< $<"
@@ -74,8 +76,28 @@ melodicdesktopfull: $(MELODICDESKTOPFULL)/$(DOCKERFILE) melodicdesktop
 	. >> /dev/null && \
 	echo "build finished $(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
 
+crystalbase: $(CRYSTALBASE)/$(DOCKERFILE)
+	@echo "build start $(PROJECT):$(CRYSTALBASE) <<< $<"
+	@docker build \
+		--file $< \
+		--build-arg GIT_REVISION=$(REVISION) \
+		--build-arg GIT_ORIGIN=$(REVISION) \
+		--tag $(PROJECT):$(CRYSTALBASE) \
+	. >> /dev/null && \
+	echo "build finished $(PROJECT):$(CRYSTALBASE) <<< $<"
+
+crystaldesktop: $(CRYSTALDESKTOP)/$(DOCKERFILE) crystalbase
+	@echo "build start $(PROJECT):$(CRYSTALDESKTOP) <<< $<"
+	@docker build \
+		--file $< \
+		--build-arg GIT_REVISION=$(REVISION) \
+		--build-arg GIT_ORIGIN=$(REVISION) \
+		--tag $(PROJECT):$(CRYSTALDESKTOP) \
+	. >> /dev/null && \
+	echo "build finished $(PROJECT):$(CRYSTALDESKTOP) <<< $<"
+
 .PHONY: clean
-clean: $(KINETICBASE) $(KINETICDESKTOP) $(KINETICDESKTOPFULL) $(MELODICBASE) $(MELODICDESKTOP) $(MELODICDESKTOPFULL)
+clean: $(KINETICBASE) $(KINETICDESKTOP) $(KINETICDESKTOPFULL) $(MELODICBASE) $(MELODICDESKTOP) $(MELODICDESKTOPFULL) $(CRYSTALBASE) $(CRYSTALDESKTOP)
 	@for IMAGETAG in $^; do \
 		echo "remove $(PROJECT):$$IMAGETAG"; \
 		docker image rm $(PROJECT):$$IMAGETAG; \
