@@ -17,6 +17,6 @@ make
 ## Usage
 Example: kinetic-base
 ```
-docker run -p 6080:80 ros-vnc:kinetic-base
+docker run -p 6080:80 naokitakahashi12/ros-vnc:kinetic-base
 ```
 Access to [localhost:6080](http://localhost:6080).
