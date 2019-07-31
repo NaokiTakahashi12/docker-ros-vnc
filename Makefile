@@ -3,6 +3,7 @@ PROJECT     	:= ros-vnc
 ORIGIN     		:= $(shell git remote get-url origin | sed -e 's/^.*@//g')
 REVISION    	:= $(shell git rev-parse --short HEAD)
 DOCKERFILES 	:= $(sort $(wildcard */$(DOCKERFILE)))
+USERNAME		:= naokitakahashi12
 
 KINETICBASE			:= kinetic-base
 KINETICDESKTOP		:= kinetic-desktop
@@ -19,110 +20,110 @@ DASHINGDESKTOP		:= dashing-desktop
 build: kineticdesktopfull melodicdesktopfull crystaldesktop dashingdesktop
 
 kineticbase: $(KINETICBASE)/$(DOCKERFILE)
-	@echo "build start $(PROJECT):$(KINETICBASE) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(KINETICBASE) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(KINETICBASE) \
+		--tag $(USERNAME)/$(PROJECT):$(KINETICBASE) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(KINETICBASE) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(KINETICBASE) <<< $<"
 
 kineticdesktop: $(KINETICDESKTOP)/$(DOCKERFILE) kineticbase
-	@echo "build start $(PROJECT):$(KINETICDESKTOP) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(KINETICDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(KINETICDESKTOP) \
+		--tag $(USERNAME)/$(PROJECT):$(KINETICDESKTOP) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(KINETICDESKTOP) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(KINETICDESKTOP) <<< $<"
 
 kineticdesktopfull: $(KINETICDESKTOPFULL)/$(DOCKERFILE) kineticdesktop
-	@echo "build start $(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(KINETICDESKTOPFULL) \
+		--tag $(USERNAME)/$(PROJECT):$(KINETICDESKTOPFULL) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(KINETICDESKTOPFULL) <<< $<"
 
 melodicbase: $(MELODICBASE)/$(DOCKERFILE)
-	@echo "build start $(PROJECT):$(MELODICBASE) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(MELODICBASE) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(MELODICBASE) \
+		--tag $(USERNAME)/$(PROJECT):$(MELODICBASE) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(MELODICBASE) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(MELODICBASE) <<< $<"
 
 melodicdesktop: $(MELODICDESKTOP)/$(DOCKERFILE) melodicbase
-	@echo "build start $(PROJECT):$(MELODICDESKTOP) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(MELODICDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(MELODICDESKTOP) \
+		--tag $(USERNAME)/$(PROJECT):$(MELODICDESKTOP) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(MELODICDESKTOP) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(MELODICDESKTOP) <<< $<"
 
 melodicdesktopfull: $(MELODICDESKTOPFULL)/$(DOCKERFILE) melodicdesktop
-	@echo "build start $(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(MELODICDESKTOPFULL) \
+		--tag $(USERNAME)/$(PROJECT):$(MELODICDESKTOPFULL) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(MELODICDESKTOPFULL) <<< $<"
 
 crystalbase: $(CRYSTALBASE)/$(DOCKERFILE)
-	@echo "build start $(PROJECT):$(CRYSTALBASE) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(CRYSTALBASE) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(CRYSTALBASE) \
+		--tag $(USERNAME)/$(PROJECT):$(CRYSTALBASE) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(CRYSTALBASE) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(CRYSTALBASE) <<< $<"
 
 crystaldesktop: $(CRYSTALDESKTOP)/$(DOCKERFILE) crystalbase
-	@echo "build start $(PROJECT):$(CRYSTALDESKTOP) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(CRYSTALDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(CRYSTALDESKTOP) \
+		--tag $(USERNAME)/$(PROJECT):$(CRYSTALDESKTOP) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(CRYSTALDESKTOP) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(CRYSTALDESKTOP) <<< $<"
 
 dashingbase: $(DASHINGBASE)/$(DOCKERFILE)
-	@echo "build start $(PROJECT):$(DASHINGBASE) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(DASHINGBASE) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(DASHINGBASE) \
+		--tag $(USERNAME)/$(PROJECT):$(DASHINGBASE) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(DASHINGBASE) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(DASHINGBASE) <<< $<"
 
 dashingdesktop: $(DASHINGDESKTOP)/$(DOCKERFILE) dashingbase
-	@echo "build start $(PROJECT):$(DASHINGDESKTOP) <<< $<"
+	@echo "build start $(USERNAME)/$(PROJECT):$(DASHINGDESKTOP) <<< $<"
 	@docker build \
 		--file $< \
 		--build-arg GIT_REVISION=$(REVISION) \
 		--build-arg GIT_ORIGIN=$(REVISION) \
-		--tag $(PROJECT):$(DASHINGDESKTOP) \
+		--tag $(USERNAME)/$(PROJECT):$(DASHINGDESKTOP) \
 	. >> /dev/null && \
-	echo "build finished $(PROJECT):$(DASHINGDESKTOP) <<< $<"
+	echo "build finished $(USERNAME)/$(PROJECT):$(DASHINGDESKTOP) <<< $<"
 
 .PHONY: clean
 clean: $(KINETICBASE) $(KINETICDESKTOP) $(KINETICDESKTOPFULL) $(MELODICBASE) $(MELODICDESKTOP) $(MELODICDESKTOPFULL) $(CRYSTALBASE) $(CRYSTALDESKTOP) $(DASHINGBASE) $(DASHINGDESKTOP)
 	@for IMAGETAG in $^; do \
 		echo "remove $(PROJECT):$$IMAGETAG"; \
-		docker image rm $(PROJECT):$$IMAGETAG; \
+		docker image rm $(USERNAME)/$(PROJECT):$$IMAGETAG; \
 	done
 	@echo "finished"
 

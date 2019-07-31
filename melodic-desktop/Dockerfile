@@ -1,4 +1,4 @@
-FROM ros-vnc:melodic-base
+FROM naokitakahashi12/ros-vnc:melodic-base
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
 	apt upgrade -y && \

@@ -1,5 +1,6 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc:bionic
-RUN apt update && \
+RUN sed -i 's#http://tw.archive.ubuntu.com/#http://archive.ubuntu.com/#' /etc/apt/sources.list && \
+	apt update && \
 	apt upgrade -y && \
 	apt install -y \
 		software-properties-common \
