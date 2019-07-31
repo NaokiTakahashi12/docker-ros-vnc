@@ -1,5 +1,5 @@
 # docker-ros-vnc 🐋
-VNC container for ROS(kinetic/melodic).
+VNC container for ROS(kinetic/melodic) and ROS2(crystal/dashing).
 
 This container image based on [dorowu/ubuntu-desktop-lxde-vnc](https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc).
 
