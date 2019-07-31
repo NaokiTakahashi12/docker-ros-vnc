@@ -1,4 +1,4 @@
-FROM ros-vnc:dashing-base
+FROM naokitakahashi12/ros-vnc:dashing-base
 RUN apt update && \
 	apt upgrade -y && \
 	apt install -y \
