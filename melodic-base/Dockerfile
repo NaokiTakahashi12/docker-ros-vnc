@@ -17,5 +17,6 @@ RUN sed -i 's#http://tw.archive.ubuntu.com/#http://archive.ubuntu.com/#' /etc/ap
 		&& \
 	bash -c '. /opt/ros/melodic/setup.bash; rosdep init; rosdep update' && \
 	echo 'source /opt/ros/melodic/setup.bash' >> ~/.bashrc && \
+	apt autoremove -y && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*

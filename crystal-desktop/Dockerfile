@@ -4,5 +4,6 @@ RUN apt update && \
 	apt install -y \
 		ros-crystal-desktop \
 	&& \
+	apt autoremove -y && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
