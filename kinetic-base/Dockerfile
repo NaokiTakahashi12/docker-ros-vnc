@@ -14,7 +14,8 @@ RUN apt update && \
 		ros-kinetic-ros-base \
 		&& \
 	bash -c '. /opt/ros/kinetic/setup.bash; rosdep init; rosdep update' && \
-	echo 'source /opt/ros/kinetic/setup.bash' >> ~/.bashrc && \
+	echo 'source /opt/ros/kinetic/setup.bash' >> /root/.bashrc && \
+	echo 'source /opt/ros/kinetic/setup.bash' >> /home/ubuntu/.bashrc && \
 	apt autoremove -y && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
