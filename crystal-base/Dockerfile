@@ -19,7 +19,8 @@ RUN sed -i 's#http://tw.archive.ubuntu.com/#http://archive.ubuntu.com/#' /etc/ap
 		ros-crystal-ros-base \
 	&& \
 	bash -c '. /opt/ros/crystal/local_setup.bash; rosdep init; rosdep update' && \
-	echo 'source /opt/ros/crystal/local_setup.bash' >> ~/.bashrc && \
+	echo 'source /opt/ros/crystal/local_setup.bash' >> /root/.bashrc && \
+	echo 'source /opt/ros/crystal/local_setup.bash' >> /home/ubuntu/.bashrc && \
 	apt autoremove -y && \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
