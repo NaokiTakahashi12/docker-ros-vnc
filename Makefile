@@ -15,9 +15,11 @@ CRYSTALBASE			:= crystal-base
 CRYSTALDESKTOP		:= crystal-desktop
 DASHINGBASE			:= dashing-base
 DASHINGDESKTOP		:= dashing-desktop
+FOXYBASE			:= foxy-base
+FOXYDESKTOP			:= foxy-desktop
 
 .PHONY: build
-build: kineticdesktopfull melodicdesktopfull crystaldesktop dashingdesktop
+build: kineticdesktopfull melodicdesktopfull crystaldesktop dashingdesktop foxydesktop
 
 kineticbase: $(KINETICBASE)/$(DOCKERFILE)
 	@echo "build start $(USERNAME)/$(PROJECT):$(KINETICBASE) <<< $<"
@@ -118,6 +120,26 @@ dashingdesktop: $(DASHINGDESKTOP)/$(DOCKERFILE) dashingbase
 		--tag $(USERNAME)/$(PROJECT):$(DASHINGDESKTOP) \
 	. >> /dev/null && \
 	echo "build finished $(USERNAME)/$(PROJECT):$(DASHINGDESKTOP) <<< $<"
+
+foxybase: $(FOXYBASE)/$(DOCKERFILE)
+	@echo "build start $(USERNAME)/$(PROJECT):$(FOXYBASE) <<< $<"
+	@docker build \
+		--file $< \
+		--build-arg GIT_REVISION=$(REVISION) \
+		--build-arg GIT_ORIGIN=$(REVISION) \
+		--tag $(USERNAME)/$(PROJECT):$(FOXYBASE) \
+	. && \
+	echo "build finished $(USERNAME)/$(PROJECT):$(FOXYBASE) <<< $<"
+
+foxydesktop: $(FOXYDESKTOP)/$(DOCKERFILE) foxybase
+	@echo "build start $(USERNAME)/$(PROJECT):$(FOXYDESKTOP) <<< $<"
+	@docker build \
+		--file $< \
+		--build-arg GIT_REVISION=$(REVISION) \
+		--build-arg GIT_ORIGIN=$(REVISION) \
+		--tag $(USERNAME)/$(PROJECT):$(FOXYDESKTOP) \
+	. && \
+	echo "build finished $(USERNAME)/$(PROJECT):$(FOXYDESKTOP) <<< $<"
 
 .PHONY: clean
 clean: $(KINETICBASE) $(KINETICDESKTOP) $(KINETICDESKTOPFULL) $(MELODICBASE) $(MELODICDESKTOP) $(MELODICDESKTOPFULL) $(CRYSTALBASE) $(CRYSTALDESKTOP) $(DASHINGBASE) $(DASHINGDESKTOP)
