@@ -8,6 +8,7 @@ This container image based on [dorowu/ubuntu-desktop-lxde-vnc](https://hub.docke
 + melodic
 + crystal
 + dashing
++ foxy
 
 ## How to build
 ```
